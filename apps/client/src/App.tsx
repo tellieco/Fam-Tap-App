@@ -42,9 +42,9 @@ function App() {
             <Button
               variant="ghost"
               size="lg"
-              className="flex flex-col w-36 h-36"
+              className="flex flex-col w-36 h-36 bg-amber-600"
             >
-              <MoonIcon className="w-12 h-12" />
+              <MoonIcon width={20} height={20} />
               <span className="text-xl">Sleep</span>
             </Button>
           </ButtonGroup>
@@ -54,7 +54,7 @@ function App() {
               size="lg"
               className="flex flex-col w-36 h-36"
             >
-              <SunIcon className="w-12 h-12" />
+              <SunIcon width={20} height={20} />
               <span className="text-xl">Wake</span>
             </Button>
           </ButtonGroup>
@@ -67,7 +67,7 @@ function App() {
               size="lg"
               className="flex flex-col w-36 h-36"
             >
-              <MilkIcon className="w-12 h-12" />
+              <MilkIcon width={20} height={20} />
               <span className="text-xl">Milk</span>
             </Button>
           </ButtonGroup>
@@ -77,7 +77,7 @@ function App() {
               size="lg"
               className="flex flex-col w-36 h-36"
             >
-              <UtensilsIcon className="w-12 h-12" />
+              <UtensilsIcon width={20} height={20} />
               <span className="text-xl">Food</span>
             </Button>
           </ButtonGroup>
@@ -89,7 +89,7 @@ function App() {
               size="lg"
               className="flex flex-col w-36 h-36"
             >
-              <DropletsIcon className="w-12 h-12" />
+              <DropletsIcon width={20} height={20} />
               <span className="text-xl">Pee</span>
             </Button>
           </ButtonGroup>
@@ -99,7 +99,7 @@ function App() {
               size="lg"
               className="flex flex-col w-36 h-36"
             >
-              <ToiletIcon className="w-12 h-12" />
+              <ToiletIcon width={20} height={20} />
               <span className="text-xl">Poo </span>
             </Button>
           </ButtonGroup>

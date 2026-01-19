@@ -1,17 +1,32 @@
 import express, { Express, Request, Response } from 'express'
+import cors from 'cors'
+import morgan from 'morgan'
 import dotenv from 'dotenv'
+import activityController from './controller/activityController'
+import logController from './controller/logController'
+import babyController from './controller/babyController'
 dotenv.config()
 
 const PORT = process.env.PORT
 const app: Express = express()
-app.use(express.json)
+app.use(express.json())
 app.use(cors())
+app.use(morgan('dev'))
 
+app.post('/babies', babyController.createBaby)
+app.get('/babies', babyController.getAllBabies)
+app.post('/activities', activityController.createActivity)
 app.get('/activities', activityController.getActivities)
-app.get('/logs', logController.getLogs)
-app.post('/logs')
+app.post('/logs', logController.createLog)
+app.get('/logs', logController.getAllLogs)
+// app.get('/logs/today', logController.getTodayLogs)
+// app.get('/log/latest', logController.getLatestLog)
+
+// app.put('/log/:id', logController.updateLog)
+// app.delete('/log/:id', logController.deleteLog)
+
 app.get('/', (_: Request, res: Response) => {
-  res.send('Express + TypeScript Server')
+  res.send('Hello, this server is working fine!')
 })
 
 app.listen(PORT, () => {
