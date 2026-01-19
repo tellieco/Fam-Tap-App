@@ -15,13 +15,14 @@ app.use(morgan('dev'))
 
 app.post('/babies', babyController.createBaby)
 app.get('/babies', babyController.getAllBabies)
+
 app.post('/activities', activityController.createActivity)
 app.get('/activities', activityController.getActivities)
+
 app.post('/logs', logController.createLog)
 app.get('/logs', logController.getAllLogs)
-// app.get('/logs/today', logController.getTodayLogs)
-// app.get('/log/latest', logController.getLatestLog)
-
+app.get('/logs/latest', logController.getLatestLogs)
+app.get('/logs/today', logController.getTodayLogs)
 // app.put('/log/:id', logController.updateLog)
 // app.delete('/log/:id', logController.deleteLog)
 

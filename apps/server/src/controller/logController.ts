@@ -1,15 +1,8 @@
+// import { error } from 'node:console'
 import logModel from '../model/logModel'
 import { Request, Response } from 'express'
 
 const logController = {
-  getAllLogs: async (_req: Request, res: Response) => {
-    try {
-      const logs = await logModel.getAll()
-      res.status(200).json({ logs })
-    } catch (error) {
-      res.status(500).json({ error: 'Internal Server Error' })
-    }
-  },
   createLog: async (req: Request, res: Response) => {
     try {
       const { babyId, activityId } = req.body
@@ -24,15 +17,43 @@ const logController = {
       res.status(500).json({ error: 'Internal Server Error' })
     }
   },
-  //   getTodayLog: async (req, res) => {
-  //     const logs = await logModel.getToday()
-  //     res.json({ logs })
-  //   },
-  //   getLatestLog: async (req, res) => {
-  //     const logs = await logModel.getLatest()
-  //     res.json({ logs })
-  //   },
-  //
+
+  getAllLogs: async (_req: Request, res: Response) => {
+    try {
+      const logs = await logModel.getAll()
+      if (!logs) {
+        return res.status(404).json({ error: 'Logs not found' })
+      }
+      res.status(200).json({ logs })
+    } catch (error) {
+      res.status(500).json({ error: 'Internal Server Error' })
+    }
+  },
+
+  getLatestLogs: async (_req: Request, res: Response) => {
+    try {
+      const logs = await logModel.getLatest()
+      if (!logs) {
+        return res.status(404).json({ error: 'Log not found' })
+      }
+      res.status(200).json({ logs })
+    } catch (error) {
+      res.status(500).json({ error: 'Internal Server Error' })
+    }
+  },
+
+  getTodayLogs: async (_req: Request, res: Response) => {
+    try {
+      const logs = await logModel.getToday()
+      if (!logs) {
+        return res.status(404).json({ error: 'Log not found' })
+      }
+      res.status(200).json({ logs })
+    } catch (error) {
+      res.status(500).json({ error: 'Internal Server Error' })
+    }
+  },
+
   //   updateLog: async (req, res) => {
   //     const logs = await logModel.update()
   //     res.json({ logs })
