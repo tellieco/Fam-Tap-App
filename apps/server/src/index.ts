@@ -15,16 +15,14 @@ app.use(morgan('dev'))
 
 app.post('/babies', babyController.createBaby)
 app.get('/babies', babyController.getAllBabies)
-
 app.post('/activities', activityController.createActivity)
-app.get('/activities', activityController.getActivities)
-
+app.get('/activities', activityController.getAllActivities)
 app.post('/logs', logController.createLog)
 app.get('/logs', logController.getAllLogs)
 app.get('/logs/latest', logController.getLatestLogs)
 app.get('/logs/today', logController.getTodayLogs)
-// app.put('/log/:id', logController.updateLog)
-// app.delete('/log/:id', logController.deleteLog)
+app.patch('/logs/:id', logController.updateLog)
+app.delete('/logs/:id', logController.deleteLog)
 
 app.get('/', (_: Request, res: Response) => {
   res.send('Hello, this server is working fine!')

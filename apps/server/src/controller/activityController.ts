@@ -15,7 +15,7 @@ const activityController = {
     }
   },
 
-  getActivities: async (_req: Request, res: Response) => {
+  getAllActivities: async (_req: Request, res: Response) => {
     try {
       const activities = await activityModel.getAll()
       res.status(200).json({ activities })

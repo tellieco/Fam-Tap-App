@@ -1,4 +1,3 @@
-// import { error } from 'node:console'
 import logModel from '../model/logModel'
 import { Request, Response } from 'express'
 
@@ -54,14 +53,33 @@ const logController = {
     }
   },
 
-  //   updateLog: async (req, res) => {
-  //     const logs = await logModel.update()
-  //     res.json({ logs })
-  //   },
+  updateLog: async (req: Request, res: Response) => {
+    try {
+      const logId = Number(req.params.id)
+      const activityId = req.body.activityId
+      if (!logId || !activityId) {
+        return res
+          .status(400)
+          .json({ error: 'Logid and Activityid are required.' })
+      }
+      const log = await logModel.update({ logId, activityId })
+      res.status(200).json({ log })
+    } catch (error) {
+      res.status(500).json({ error: 'Internal server error.' })
+    }
+  },
 
-  //   deleteLog: async (req, res) => {
-  //     const logs = await logModel.delete()
-  //     res.json({ logs })
-  //   },
+  deleteLog: async (req: Request, res: Response) => {
+    try {
+      const logId = Number(req.params.id)
+      if (!logId) {
+        return res.status(400).json({ error: 'Logid is required.' })
+      }
+      const log = await logModel.delete({ logId })
+      res.status(200).json({ log })
+    } catch (error) {
+      res.status(500).json({ error: 'Internal server error.' })
+    }
+  },
 }
 export default logController

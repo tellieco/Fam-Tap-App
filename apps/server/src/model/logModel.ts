@@ -40,20 +40,27 @@ const logModel = {
     return todayLog
   },
 
-  // update: async ({ activityId }: { activityId: number }) => {
-  //   const updatedLog = await prisma.log.update({
-  //     where: { id },
-  //     data: { activityId },
-  //   })
-  //   console.log(updatedLog)
-  //   return updatedlog
-  // },
+  update: async ({
+    logId,
+    activityId,
+  }: {
+    logId: number
+    activityId: number
+  }) => {
+    const updatedLog = await prisma.log.update({
+      where: { id: logId },
+      data: { activityId: activityId },
+    })
+    console.log(updatedLog)
+    return updatedLog
+  },
 
-  // delete: async ({ activityId }: { activityId: number }) => {
-  //   const deletedLog = await prisma.log.delete({
-  //     where: { id: { activityId } },
-  //   })
-  //   console.log(deletedLog)
-  // },
+  delete: async ({ logId }: { logId: number }) => {
+    const deletedLog = await prisma.log.delete({
+      where: { id: logId },
+    })
+    console.log(deletedLog)
+    return deletedLog
+  },
 }
 export default logModel
