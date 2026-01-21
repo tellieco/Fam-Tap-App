@@ -1,16 +1,47 @@
 import { useEffect, useState } from "react";
 import { Button } from "./components/ui/button";
 import { ButtonGroup } from "./components/ui/button-group";
-import { ClockIcon } from "@radix-ui/react-icons";
-import { HomeIcon, LucideBaby } from "lucide-react";
+import { SunIcon, MoonIcon, ClockIcon } from "@radix-ui/react-icons";
+import {
+  DropletsIcon,
+  HomeIcon,
+  LucideBaby,
+  MilkIcon,
+  ToiletIcon,
+  UtensilsIcon,
+} from "lucide-react";
 import api from "./api";
 import { NavLink } from "react-router-dom";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "./components/ui/table";
+
+const iconMap = {
+  MoonIcon: MoonIcon,
+  SunIcon: SunIcon,
+  MilkIcon: MilkIcon,
+  UtensilsIcon: UtensilsIcon,
+  DropletsIcon: DropletsIcon,
+  ToiletIcon: ToiletIcon,
+};
 
 function Today() {
-  const [todayLogs, setTodayLogs] = useState(null);
+  const [activities, setActivities] = useState([]);
+  const [todayLogs, setTodayLogs] = useState<Logs | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
+      const fetchActivities = await api.getAllActivities();
+      setActivities(fetchActivities.activities);
+      console.log(fetchActivities.activities);
+
       const fetchTodayLogs = await api.getTodayLogs();
       setTodayLogs(fetchTodayLogs.logs);
       console.log(fetchTodayLogs.logs);
@@ -18,9 +49,10 @@ function Today() {
     fetchData();
   }, []);
 
-  //   const dateString = new Date({});
-  //   const time = dateString.toLocaleTimeString();
-  //   const date = dateString.toDateString();
+  let dateTop = new Date().toDateString();
+  if (todayLogs && todayLogs.length > 0) {
+    dateTop = new Date(todayLogs[0].timeStamp).toDateString();
+  }
 
   return (
     <div
@@ -39,13 +71,40 @@ function Today() {
           </div>
         </div>
       </header>
-
       <main className="flex-1 overflow-auto gap-4 flex justify-center">
-        <div className="grid grid-cols-2 place-items-center">
-          <span className="text-3xl">TODAY</span>
+        <div className="place-items-center">
+          <Table>
+            {/* <TableCaption>Today TimeLine</TableCaption> */}
+            <TableHeader>
+              <TableRow>
+                <TableHead className="text-xl"> {dateTop} </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {todayLogs?.map((log) => {
+                const activity = activities.find(
+                  (a) => a.id === log.activityId,
+                );
+
+                const time = new Date(log.timeStamp).toLocaleTimeString();
+
+                const IconComponent = activity ? iconMap[activity.icon] : null;
+
+                return (
+                  <TableRow key={log.id}>
+                    <TableCell>
+                      {<IconComponent />}
+                      {activity?.name}
+                    </TableCell>
+                    <TableCell>{time}</TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
         </div>
       </main>
-
+      ;
       <footer className="border-t p-3">
         <nav className="flex justify-center">
           <ButtonGroup>
